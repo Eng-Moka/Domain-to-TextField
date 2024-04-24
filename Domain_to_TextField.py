@@ -46,11 +46,13 @@ def Domain_to_text(fc, feild_name, new_feild_name):
 if __name__ == '__main__':
 
     # Tool parameter accessed with GetParameter or GetParameterAsText
-    # gdb = arcpy.GetParameterAsText(0)
     fc = arcpy.GetParameterAsText(0)
     feild_name = arcpy.GetParameterAsText(1)
     new_feild_name = arcpy.GetParameterAsText(2)
     
     Domain_to_text(fc,feild_name,new_feild_name)
     
-    # Update derived parameter values using arcpy.SetParameter() or arcpy.SetParameterAsText()
+    # Script Developed by: ENG. Mohamed Mokashifi
+    # Linkedin: https://www.linkedin.com/in/mohamed-mokashifi-adam
+    # GitHub: https://github.com/Eng-Moka
+    # Gmail: mohamed.mokashifi@gmail.com
