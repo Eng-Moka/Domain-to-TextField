@@ -12,7 +12,7 @@ def get_gdb_path_of_layer(layer_name):
         return ""
 
 
-def Domain_to_text(fc, feild_name, new_feild_name):
+def Domain_to_text(fc, field_name, new_field_name):
 
     # Extract domain name from field Des
     desc = arcpy.Describe(fc)
@@ -27,22 +27,22 @@ def Domain_to_text(fc, feild_name, new_feild_name):
         return
     domain_dec = domain.codedValues
     
-    arcpy.AddMessage(f"{domain_dec}")
-    arcpy.AddMessage(f"{domain.name}")
-    
-
     arcpy.management.AddField(fc, new_feild_name, "TEXT", None, None, None, new_feild_name, "NULLABLE", "NON_REQUIRED", '')
 
+    with arcpy.da.Editor(GDB) as editor:
+        with arcpy.da.UpdateCursor(fc, [field_name, new_field_name]) as cursor:
+            for row in cursor:
+                for key, val in domain_dec.items():
+                    if row[0] == key:
+                        row[1] = val
+                cursor.updateRow(row)
             
-    with arcpy.da.UpdateCursor(fc,[feild_name,new_feild_name]) as cursor:
-        for row in cursor:
-            for key,val in domain_dec.items():
-                if row[0] == key:
-                    row[1] = val
-            cursor.updateRow(row)
+    arcpy.AddMessage('Script Developed by: ENG. Mohamed Mokashifi\n')
+    arcpy.AddMessage('Linkedin: https://www.linkedin.com/in/mohamed-mokashifi-adam\n')
+    arcpy.AddMessage('GitHub: https://github.com/Eng-Moka')
+    arcpy.AddMessage('Gmail: mohamed.mokashifi@gmail.com\n')
 
 
-# This is used to execute code if the file was run but not imported
 if __name__ == '__main__':
 
     # Tool parameter accessed with GetParameter or GetParameterAsText
@@ -51,6 +51,8 @@ if __name__ == '__main__':
     new_feild_name = arcpy.GetParameterAsText(2)
     
     Domain_to_text(fc,feild_name,new_feild_name)
+    
+
     
     # Script Developed by: ENG. Mohamed Mokashifi
     # Linkedin: https://www.linkedin.com/in/mohamed-mokashifi-adam
